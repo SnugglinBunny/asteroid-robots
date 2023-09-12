@@ -26,7 +26,7 @@ def test_load_commands():
         '{"type": "new-robot", "bearing": "north", "position": {"x": 0, "y": 0}}\n',
         '{"type": "move", "movement": "move-forward"}\n',
     ]
-    with open(f"{TEST_FILE_LOC}/test_instructions.txt", mode="w", encoding="uft-8") as test_file:
+    with open(f"{TEST_FILE_LOC}/test_instructions.txt", mode="w", encoding="utf-8") as test_file:
         test_file.writelines(commands)
 
     test_robots = list(robots.load_commands(f"{TEST_FILE_LOC}/test_instructions.txt"))
@@ -36,9 +36,9 @@ def test_load_commands():
     assert test_robots[0].y == 1
 
 def test_update_robot_move_forward_bounds():
-    initial_robot = robots.Robot("north", 9, 9)  # Near the edge of a 10x10 asteroid.
+    initial_robot = robots.Robot("north", 10, 10)  # Near the edge of a 10x10 asteroid.
     updated_robot = robots.update_robot(initial_robot, "move-forward", {"x": 10, "y": 10})
-    assert updated_robot.x == 9  # Should not exceed the asteroid's bounds.
+    assert updated_robot.x == 10  # Should not exceed the asteroid's bounds.
     assert updated_robot.y == 10
 
 def test_update_robot_missing_asteroid_data():
