@@ -1,7 +1,7 @@
 import argparse
 import json
 import sys
-from app import robots
+from robots import robot_commands
 
 def format_robot_final_pos(robots_final_pos):
     """Format the final positions of robots for JSON output."""
@@ -26,8 +26,8 @@ def parse_arguments():
 def main():
     try:
         args = parse_arguments()
-        robot_commands = robots.load_commands(args.file_name)
-        for r in format_robot_final_pos(robot_commands):
+        r_commands = robot_commands.load_commands(f"data/{args.file_name}")
+        for r in format_robot_final_pos(r_commands):
             print(json.dumps(r))
     except Exception as e:
         print(f"Error: {e}")

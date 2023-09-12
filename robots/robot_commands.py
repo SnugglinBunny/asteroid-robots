@@ -1,6 +1,5 @@
 import json
-import sys
-from collections import namedtuple
+from .robots import Robot
 
 # Define movements and outcomes as constants.
 MOVEMENTS = {
@@ -8,8 +7,6 @@ MOVEMENTS = {
     "turn-right": {"north": "east", "east": "south", "south": "west", "west":"north",},
     "move-forward": {"north": (0, 1), "east": (1, 0), "south": (0, -1), "west": (-1, 0)},
 }
-
-Robot = namedtuple("robot", "bearing,x,y")
 
 def update_robot(robot, movement, asteroid_data):
     """Update the robot's position or bearing based on the input movement intention.
