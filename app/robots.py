@@ -53,8 +53,13 @@ def load_commands(file_name):
 
     try:
         with open(file_name, mode="r", encoding="utf-8") as file:
-            for line in file:
-                command = json.loads(line)
+            for line_number, line in enumerate(file, start=1):
+                try:
+                    command = json.loads(line)
+                except json.JSONDecodeError as e:
+                    # Handle JSON decoding error with a more informative message.
+                    raise json.JSONDecodeError(f"Error decoding JSON on line {line_number}: {e}", doc=line, pos=e.pos) from e
+
                 cmd_type = command.get("type")
 
                 if cmd_type == "asteroid":
@@ -75,33 +80,3 @@ def load_commands(file_name):
 
     except FileNotFoundError as e:
         raise FileNotFoundError(f"File not found: {file_name}") from e
-    except json.JSONDecodeError as e:
-        raise json.JSONDecodeError(f"Error decoding JSON in file: {e}", doc=command, pos=0) from e
-
-
-def main():
-    """Main program entry point.
-
-    This function reads robot commands from a file, simulates their movements,
-    and outputs the final state of each robot.
-    """
-    file_name = sys.argv[1] if len(sys.argv) > 1 else "instructions.txt"
-    try:
-        for robot in load_commands(file_name):
-            robot_dict = {
-                "type": "robot",
-                "position": {
-                    "x": robot.x,
-                    "y": robot.y
-                },
-                "bearing": robot.bearing
-            }
-            # Output the final state of each robot as JSON.
-            print(json.dumps(robot_dict))
-    except Exception as e:
-        print(f"Error: {e}")
-        sys.exit(1)
-
-if __name__ == "__main__":
-    main()
-    
