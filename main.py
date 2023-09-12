@@ -1,3 +1,4 @@
+import argparse
 import json
 import sys
 from app import robots
@@ -15,11 +16,10 @@ def format_robot_final_pos(robots_final_pos):
 
 def parse_arguments():
     """Parse command-line arguments using argparse."""
-    import argparse
-
     parser = argparse.ArgumentParser(description="Simulate robot movements on an asteroid.")
     parser.add_argument(
-        "file_name", nargs="?", default="instructions.txt", help="Name of the input file with robot commands."
+        "file_name", nargs="?", default="instructions.txt", 
+            help="Name of the input file with robot commands."
     )
     return parser.parse_args()
 
@@ -35,3 +35,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    

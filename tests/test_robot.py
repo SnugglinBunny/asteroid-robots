@@ -26,7 +26,7 @@ def test_load_commands():
         '{"type": "new-robot", "bearing": "north", "position": {"x": 0, "y": 0}}\n',
         '{"type": "move", "movement": "move-forward"}\n',
     ]
-    with open(f"{TEST_FILE_LOC}/test_instructions.txt", "w") as test_file:
+    with open(f"{TEST_FILE_LOC}/test_instructions.txt", mode="w", encoding="uft-8") as test_file:
         test_file.writelines(commands)
 
     test_robots = list(robots.load_commands(f"{TEST_FILE_LOC}/test_instructions.txt"))
@@ -49,7 +49,7 @@ def test_update_robot_missing_asteroid_data():
 def test_load_commands_invalid_json():
     commands = [
         '{"type": "asteroid", "size": {"x": 5, "y": 5}}\n',
-        '{"type": "new-robot", "bearing": "south", "position": {"x": 1, "y": 1}}\n',  # Valid JSON command
+        '{"type": "new-robot", "bearing": "south", "position": {"x": 1, "y": 1}}\n',
         '{"type": "invalid-json, "bearing": "east", "position": {"x": 2, "y": 2}\n',  # Invalid JSON
     ]
     with open("tests/test_instructions_invalid.txt", mode="w", encoding="utf-8") as test_file:
@@ -72,3 +72,4 @@ def test_load_commands_multiple_robots():
 
 if __name__ == "__main__":
     pytest.main()
+    
